@@ -35,13 +35,25 @@ export default function ServerSidePage({ session }: { session: Session }) {
 
 // Export the `session` prop to use sessions with Server Side Rendering
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+  
+  if(!session){
+    return;
+  }
+
   return {
     props: {
-      session: await unstable_getServerSession(
-        context.req,
-        context.res,
-        authOptions
-      ),
+      session: {
+        user: {
+          name: session.user?.name,
+          email: session.user?.email
+        },
+        expires: session.expires,
+      }
     },
   }
 }

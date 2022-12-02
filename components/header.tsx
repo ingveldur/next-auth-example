@@ -30,7 +30,7 @@ export default function Header() {
                 className={styles.buttonPrimary}
                 onClick={(e) => {
                   e.preventDefault()
-                  signIn()
+                  signIn('cognito')
                 }}
               >
                 Sign in
@@ -39,12 +39,6 @@ export default function Header() {
           )}
           {session?.user && (
             <>
-              {session.user.image && (
-                <span
-                  style={{ backgroundImage: `url('${session.user.image}')` }}
-                  className={styles.avatar}
-                />
-              )}
               <span className={styles.signedInText}>
                 <small>Signed in as</small>
                 <br />
